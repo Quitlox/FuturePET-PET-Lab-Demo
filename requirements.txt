@@ -1,0 +1,5 @@
+# Great article about setup vs requirement https://caremad.io/posts/2013/07/setup-vs-requirement/
+
+--index-url https://pypi.python.org/simple/
+--extra-index-url https://gitlab-ci-token:${CI_JOB_TOKEN}@ci.tno.nl/gitlab/api/v4/groups/3206/-/packages/pypi/simple
+.[tests]

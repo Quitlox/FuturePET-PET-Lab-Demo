@@ -1,0 +1,6 @@
+---
+repos:
+  - repo: https://gitlab.tsn.tno.nl/petlab/cicd/templates
+    rev: v3.26.5
+    hooks:
+      - id: petlab-hook

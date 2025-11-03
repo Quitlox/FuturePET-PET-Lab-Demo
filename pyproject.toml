@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tno.mpc.demo.futurepet"
+description = "Demonstrating the PET Lab to FCINet"
+readme = "README.md"
+authors = [{ name = "TNO PET Lab", email = "petlab@tno.nl" }]
+maintainers = [{ name = "TNO PET Lab", email = "petlab@tno.nl" }]
+keywords = [
+    "TNO",
+]
+license = { text = "Apache License, Version 2.0" }
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Private :: Do Not Upload to pypi server",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "Typing :: Typed",
+]
+urls = { Homepage = "https://pet.tno.nl/", Source = "https://ci.tno.nl/gitlab/pet/pet-project-templates/python" }
+dynamic = ["version"]
+requires-python = ">=3.9"
+dependencies = [
+    "tno.mpc.communication~=5.0"
+]
+
+[project.optional-dependencies]
+tests = [
+    "pytest>=8.1",
+    "tno.mpc.communication[tests]"
+]
+
+[tool.setuptools]
+platforms = ["any"]
+
+[tool.setuptools.dynamic]
+version = {attr = "tno.mpc.demo.futurepet.__version__"}
+
+[tool.setuptools.package-data]
+"*" = ["py.typed"]
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+known_tno = "tno"
+known_first_party = "tno.mpc.demo.futurepet"
+sections = "FUTURE,STDLIB,THIRDPARTY,TNO,FIRSTPARTY,LOCALFOLDER"
+no_lines_before = "LOCALFOLDER"
+
+[tool.pyrefly]
+project-includes = ["**/*.py*"]

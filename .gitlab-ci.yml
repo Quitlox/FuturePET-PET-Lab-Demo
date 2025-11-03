@@ -1,0 +1,15 @@
+---
+variables:
+  PYTHON_PACKAGE: "tno.mpc.demo.futurepet"
+
+include:
+  - project: "pet/lab/cicd/templates"
+    file: "python/template-simple.yaml"
+    ref: "master"
+    rules:
+      - if: "$LAB_TEMPLATE_REF == null"
+  - project: "pet/lab/cicd/templates"
+    file: "python/template-simple.yaml"
+    ref: "$LAB_TEMPLATE_REF"
+    rules:
+      - if: "$LAB_TEMPLATE_REF"
