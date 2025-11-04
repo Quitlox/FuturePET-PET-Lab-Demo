@@ -55,7 +55,7 @@ async def setup_three_pools() -> tuple[Pool, Pool, Pool]:
     comm_charlie: Communicator = HttpCommunicator(addr="localhost", port=8102)
     pool_charlie = Pool("charlie", comm_charlie)
 
-    # Add connectionts
+    # Add connections
     pool_alice.add_client(name="bob", connection=HttpConnection(addr="localhost", port=8101))
     pool_alice.add_client(name="charlie", connection=HttpConnection(addr="localhost", port=8102))
     pool_bob.add_client(name="alice", connection=HttpConnection(addr="localhost", port=8100))
