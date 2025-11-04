@@ -18,24 +18,28 @@ from tno.mpc.secret_sharing.shamir import (
 
 
 async def setup_two_pools() -> tuple[Pool, Pool]:
-    # Create Pool and Communicator for Alice
-    comm_alice: Communicator = HttpCommunicator(addr="localhost", port=8100)
-    pool_alice = Pool("alice", comm_alice)
 
-    # Create Pool and Communicator for Bob
-    comm_bob: Communicator = HttpCommunicator(addr="localhost", port=8101)
-    pool_bob = Pool("bob", comm_bob)
+    async def alice():
+        # Create Pool and Communicator for Alice
+        comm_alice: Communicator = HttpCommunicator(addr="localhost", port=8100)
+        pool_alice = Pool("alice", comm_alice)
+        # Add a connection from Alice to Bob
+        pool_alice.add_client(name="bob", connection=HttpConnection(addr="localhost", port=8101))
+        # Initialize
+        await pool_alice.initialize()
+        return pool_alice
 
-    # Add a connection from Alice to Bob
-    pool_alice.add_client(name="bob", connection=HttpConnection(addr="localhost", port=8101))
-    # Add a connection from Bob to Alice
-    pool_bob.add_client(name="alice", connection=HttpConnection(addr="localhost", port=8100))
+    async def bob():
+        # Create Pool and Communicator for Bob
+        comm_bob: Communicator = HttpCommunicator(addr="localhost", port=8101)
+        pool_bob = Pool("bob", comm_bob)
+        # Add a connection from Bob to Alice
+        pool_bob.add_client(name="alice", connection=HttpConnection(addr="localhost", port=8100))
+        # Initialize
+        await pool_bob.initialize()
+        return pool_bob
 
-    # Initialize
-    await pool_alice.initialize()
-    await pool_bob.initialize()
-
-    return pool_alice, pool_bob
+    return await asyncio.gather(alice(), bob())
 
 
 async def setup_three_pools() -> tuple[Pool, Pool, Pool]:
@@ -71,9 +75,16 @@ async def demo_communication() -> None:
     # Setup
     pool_alice, pool_bob = await setup_two_pools()
 
-    await pool_alice.send("bob", "hello world!")
-    message: str = await pool_bob.recv("alice")
-    print(f"Bob received '{message}' from Alice")
+    async def alice() -> None:
+        message = "Hello World!"
+        await pool_alice.send("bob", message)
+        print(f"Alice sent '{message}' to Bob")
+
+    async def bob() -> None:
+        message: str = await pool_bob.recv("alice")
+        print(f"Bob received '{message}' from Alice")
+
+    await asyncio.gather(alice(), bob())
 
     # Shutdown
     await pool_alice.shutdown()
