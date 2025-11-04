@@ -31,6 +31,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+gmpy = [
+    "tno.mpc.encryption_schemes.paillier[gmpy]",
+]
 tests = [
     "pytest>=8.1",
     "tno.mpc.encryption_schemes.paillier[communication]",
