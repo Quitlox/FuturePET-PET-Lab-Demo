@@ -26,13 +26,15 @@ urls = { Homepage = "https://pet.tno.nl/", Source = "https://ci.tno.nl/gitlab/pe
 dynamic = ["version"]
 requires-python = ">=3.9"
 dependencies = [
-    "tno.mpc.communication~=5.0"
+    "tno.mpc.communication~=5.0",
+    "tno.mpc.encryption_schemes.paillier~=4.1"
 ]
 
 [project.optional-dependencies]
 tests = [
     "pytest>=8.1",
-    "tno.mpc.communication[tests]"
+    "tno.mpc.encryption_schemes.paillier[communication]",
+    "tno.mpc.communication[pytest]"
 ]
 
 [tool.setuptools]
