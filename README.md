@@ -78,3 +78,22 @@ The demo file contains three different demonstrations that can be run by uncomme
 3. **Secret Sharing Demo** (`demo_secret_sharing()`): Demonstrates Shamir's secret sharing scheme with three parties (Alice, Bob, and Charlie), where each party shares a secret value and they collectively compute the sum without revealing individual values.
 
 By default, the secret sharing demo is enabled. To run a different demo, edit the `demo.py` file and uncomment the desired demo function.
+
+## Workshop Sandbox
+
+For hands-on experimentation, a `sandbox.py` file is provided at the root of the repository. This file contains boilerplate code for setting up three-party communication and clearly marked sections where you can experiment with:
+
+- **Homomorphic Encryption**: Perform computations on encrypted data using the Paillier cryptosystem
+- **Secret Sharing**: Use Shamir's secret sharing to compute on distributed secrets
+
+To use the sandbox:
+
+```console
+$ python sandbox.py
+```
+
+The file contains detailed comments marking "YOUR CODE HERE" sections where you can:
+- Change secret values
+- Implement different cryptographic operations
+- Experiment with addition, multiplication, and other computations
+- See results from all three parties (Alice, Bob, and Charlie)
